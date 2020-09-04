@@ -60,6 +60,7 @@ class TextCNN(object):
                     padding='VALID',
                     name="pool")
                 pooled_outputs.append(pooled)
+                # print(pooled.shape)  # (?, 1, 1, 128)
 
         # Combine all the pooled features
         num_filters_total = num_filters * len(filter_sizes)

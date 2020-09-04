@@ -38,7 +38,7 @@ tf.flags.DEFINE_boolean("allow_soft_placement", True, "Allow device soft device 
 tf.flags.DEFINE_boolean("log_device_placement", False, "Log placement of ops on devices")
 
 FLAGS = tf.flags.FLAGS
-FLAGS._parse_flags()
+# FLAGS._parse_flags()
 print("\nParameters:")
 for attr, value in sorted(FLAGS.__flags.items()):
     print("{}={}".format(attr.upper(), value))
@@ -77,7 +77,16 @@ def load_data(w2v_model):
 
     np.random.seed(10)
     shuffle_indices = np.random.permutation(np.arange(len(y)))
+    # print(type(shuffle_indices))  # <class 'numpy.ndarray'>
+    # print(type(x))  # <class 'numpy.ndarray'>
+    # print(x[1])  # [7942  181  949 ...    0    0    0]
+    # print(x[2])  # [7942  174    5 ...    0    0    0]
+    # print(x[1, 2])  # 949
+    # print(x[[1, 2]])  # [[7942  181  949 ...    0    0    0],[7942  174    5 ...    0    0    0]]
+    # print(x[(1, 2)])  # 949
     x_shuffled = x[shuffle_indices]
+    # print(x_shuffled)
+    # exit()
     y_shuffled = y[shuffle_indices]
 
     dev_sample_index = -1 * int(FLAGS.dev_sample_percentage * float(len(y)))
@@ -91,6 +100,15 @@ def train(w2v_model):
     # Training
     # ==================================================
     x_train, x_dev, y_train, y_dev ,vocab_size= load_data(w2v_model)
+    # print(type(x_train[1]), x_train[1])
+    # print(type(x_dev[1]), x_dev[1])
+    # print(type(y_train[1]), y_train[1])
+    # print(type(y_dev[1]), y_dev[1])
+    # <class 'numpy.ndarray'>[7942    1   92...0    0    0]
+    # <class 'numpy.ndarray'>[7942    1  291...0    0    0]
+    # <class 'numpy.ndarray'>[1 0]
+    # <class 'numpy.ndarray'>[0 1]
+    # exit()
     with tf.Graph().as_default():
         session_conf = tf.ConfigProto(
           allow_soft_placement=FLAGS.allow_soft_placement,

@@ -9,7 +9,7 @@ class w2v_wrapper:
      def __init__(self,file_path):
         # w2v_file = os.path.join(base_path, "vectors_poem.bin")
         self.model = word2vec.load(file_path)
-        if 'unknown' not  in self.model.vocab_hash:
+        if 'unknown' not in self.model.vocab_hash:
             unknown_vec = np.random.uniform(-0.1,0.1,size=128)
             self.model.vocab_hash['unknown'] = len(self.model.vocab)
             self.model.vectors = np.row_stack((self.model.vectors,unknown_vec))
